@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reviews App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ url_for('static', filename='awesomplete.css') }}" rel="stylesheet" media="screen">
+    
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Ropa+Sans);
+
+      body{
+         font-family: 'Ropa Sans',serif;
+      }
+    </style>
+
+    <script src="{{ url_for('static', filename='jquery-1.11.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='awesomplete.min.js') }}"></script>
+
+  </head>
+
+  <body>
+
+    <div class="container" id="form">
+      <h1>Search for a food to match</h1>
+      <form role="form" method="POST" action="/">
+        <input type="text" placeholder="Food name" name="foodsearch" id="food-input" class="form-control awesomplete pure-input" list="mylist" />
+        <datalist id="mylist">
+          {% for food in foods %}
+            <option>{{food}}</option>  
+          {% endfor %}
+        </datalist>
+        <input type="submit" value="Go" class="btn pure-button pure-button-primary" name="search-button">
+      </form>
+    </div>
+
+    <div class="container">
+      {% if wine %}
+        <h2>Your wine is {{wine}}!</h2>
+      {% endif %}
+      
+      {% if error != '' %}
+        <h2>{{ error }}</h2>
+      {% endif%}
+    </div>
+  </body>
+
+</html>
+
