@@ -1,19 +1,10 @@
-import datetime
-import pandas as pd
 import numpy as np
-from collections import Counter
-import os
-import operator
+import json
 import re
-import nltk
-import json
-import random
-import pickle
-import json
 
 from flask import Flask, url_for, redirect, request, jsonify, render_template, Response
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 import platform
 if platform.system() == 'Linux':
@@ -29,7 +20,7 @@ with open(path+'wineFlavorDictionary.json') as infile:
 
 foods = set(foodFlavorDictionaryForDinner.keys())
 
-@app.route('/', methods=['GET', 'POST'])
+@application.route('/', methods=['GET', 'POST'])
 def index():
     error = ''
     if request.method == "POST":
@@ -44,9 +35,26 @@ def index():
                 if (mind > mindtmp):
                     mind = mindtmp
                     wine = w
+
+                def splitwine(w):
+                    s = re.split("([A-Z][^A-Z]*)", w)[1:-1]
+                    if len(s)>1:
+                        return s[0] + ' ' + s[2]
+                    else:
+                        return s[0]
+
+                wine = splitwine(wine)
+
             return render_template('index.html', foods=foods, error=error, wine=wine)
         except:
             error = 'Your food is not in the database'
             return render_template('index.html', foods=foods, error=error)
 
     return render_template('index.html', foods=foods, error=error)
+
+# run the app.
+if __name__ == "__main__":
+    # Setting debug to True enables debug output. This line should be
+    # removed before deploying a production app.
+    application.debug = True
+    application.run()

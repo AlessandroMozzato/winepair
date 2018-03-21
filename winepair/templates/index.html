@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Reviews App</title>
+    <title>Winepair</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet" media="screen">
     <link href="{{ url_for('static', filename='awesomplete.css') }}" rel="stylesheet" media="screen">
@@ -11,6 +11,12 @@
 
       body{
          font-family: 'Ropa Sans',serif;
+         background-color: #dfcbf4;
+         color: #331356;
+      }
+      
+      .container{
+        max-width: 900px;
       }
     </style>
 
@@ -21,11 +27,14 @@
   </head>
 
   <body>
-
+    <br><br><br><br><br>
+    <center>
+    <h1>Welcome to the wine matcher!</h1>
+    <br><br>
     <div class="container" id="form">
-      <h1>Search for a food to match</h1>
+      <h3>Search for a food to match</h3>
       <form role="form" method="POST" action="/">
-        <input type="text" placeholder="Food name" name="foodsearch" id="food-input" class="form-control awesomplete pure-input" list="mylist" />
+        <input type="text" placeholder="Food name" name="foodsearch" id="food-input" class="form-control awesomplete pure-input" list="mylist" style="background-color: #ebe1f7; color:#5f00bf" />
         <datalist id="mylist">
           {% for food in foods %}
             <option>{{food}}</option>  
@@ -33,17 +42,19 @@
         </datalist>
         <input type="submit" value="Go" class="btn pure-button pure-button-primary" name="search-button">
       </form>
+
     </div>
 
     <div class="container">
       {% if wine %}
         <h2>Your wine is {{wine}}!</h2>
       {% endif %}
-      
+
       {% if error != '' %}
         <h2>{{ error }}</h2>
       {% endif%}
     </div>
+    </center>
   </body>
 
 </html>
